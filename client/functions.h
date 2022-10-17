@@ -34,7 +34,7 @@ void initSocketConnection()
 void initGUI(int argc, char *argv[])
 {
     gtk_init(&argc, &argv);
-    builder = gtk_builder_new_from_file("marriage.glade");
+    builder = gtk_builder_new_from_file("gui.glade");
 
     // initialize the pages --->
     welcome_page = GTK_WIDGET(gtk_builder_get_object(builder, "welcome_page"));
