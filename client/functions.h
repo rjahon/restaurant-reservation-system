@@ -2,33 +2,32 @@
 
 void initSocketConnection()
 {
-    printf("Creating Client Socket ...\n");
+    printf("Creating Client Socket\n");
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
-        printf("socket creation failed");
+        printf("Socket Creation Failed\n");
         exit(EXIT_FAILURE);
     }
-    printf("Defining Client Socket Family, Address & Port ...\n");
+    printf("Defining Client Socket Family, Address, and Port\n");
     memset(&serv_addr, '0', sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(PORT);
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0)
     {
-        printf("Invalid address/Address not supported\n");
+        printf("Invalid Address or Address Not Supported\n");
         exit(EXIT_FAILURE);
     }
-    printf("Client Connection on Port 8080 to Communicate with Server ...\n");
+    printf("Client Connection on Port 8080 to Communicate with Server\n");
     if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
     {
-        printf("\nConnection Failed \n");
+        printf("Connection Failed\n");
         exit(EXIT_FAILURE);
     }
 
     send(sock, "ping", strlen("ping"), 0);
     valread = read(sock, buffer, 1024);
-    printf("%s\n", buffer);
+    printf("Recieved: %s\n", buffer);
     memset(buffer, 0, sizeof(buffer));
-    // memset(cchat, 0, sizeof(cchat));
 }
 
 void initGUI(int argc, char *argv[])
@@ -238,15 +237,13 @@ void on_user_login_in_login_page_btn_clicked(GtkButton *b)
 
     memset(buffer, 0, sizeof(buffer));
     valread = read(sock, buffer, 1024);
-    printf("Buffer: %s\n", buffer);
-    // int i = 0;
+    printf("Recieved: %s\n", buffer);
     if (strcmp("Wrong", buffer) == 0)
     {
-        gtk_label_set_text(GTK_LABEL(user_login_val_label), (const gchar *)"Wrong password!!!");
+        gtk_label_set_text(GTK_LABEL(user_login_val_label), (const gchar *)"Wrong password");
     }
     else
     {
-        // i++;
         strcpy(user_name_cookie, user_name);
         gtk_widget_hide(user_login_page);
         gtk_widget_show(user_menu_page);
@@ -270,7 +267,7 @@ void on_admin_cancel_reservation_btn_clicked(GtkButton *b)
 
     memset(buffer, 0, sizeof(buffer));
     valread = read(sock, buffer, 1024);
-    printf("Buffer: %s\n", buffer);
+    printf("Recieved: %s\n", buffer);
 
     gtk_label_set_text(GTK_LABEL(admin_cancel_content_label), buffer);
     gtk_widget_hide(admin_menu_page);
@@ -285,7 +282,7 @@ void on_admin_show_reservations_btn_clicked(GtkButton *b)
 
     memset(buffer, 0, sizeof(buffer));
     valread = read(sock, buffer, 1024);
-    printf("Buffer: %s\n", buffer);
+    printf("Recieved: %s\n", buffer);
 
     gtk_label_set_text(GTK_LABEL(admin_reservations_content_label), buffer);
     gtk_widget_hide(admin_menu_page);
@@ -316,7 +313,7 @@ void on_cancel_reservation_btn_clicked(GtkButton *b)
 
     memset(buffer, 0, sizeof(buffer));
     valread = read(sock, buffer, 1024);
-    printf("Buffer: %s\n", buffer);
+    printf("Recieved: %s\n", buffer);
 
     gtk_label_set_text(GTK_LABEL(user_cancel_content_label), buffer);
     gtk_widget_hide(user_menu_page);
@@ -333,7 +330,7 @@ void on_show_reservations_btn_clicked(GtkButton *b)
 
     memset(buffer, 0, sizeof(buffer));
     valread = read(sock, buffer, 1024);
-    printf("Buffer: %s\n", buffer);
+    printf("Recieved: %s\n", buffer);
 
     gtk_label_set_text(GTK_LABEL(user_reservations_content_label), buffer);
     gtk_widget_hide(user_menu_page);
@@ -468,7 +465,7 @@ void on_admin_cancel_reserv_by_id_btn_clicked(GtkButton *b)
 {
     char reserv_id[10];
     sprintf(reserv_id, "%s", gtk_entry_get_text(GTK_ENTRY(admin_cancel_entry)));
-    printf("%s\n", reserv_id);
+    printf("reserv_id: %s\n", reserv_id);
 
     char queryUserCancelReserv[100];
     sprintf(queryUserCancelReserv, "queryUserCancelReserv/%s/", reserv_id);
